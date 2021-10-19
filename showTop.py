@@ -15,8 +15,9 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 mycursor.execute("SELECT * FROM `totalTimes` ORDER BY `totalTime` DESC LIMIT 25")
 #print("Final total time")
-f = open
-print("No ; Game ; Hours ; Slavs ")
+f = open('latest-slav-top.csv','w+')
+print("No ; Game ; Hours ; Slavs")
+f.write("No;Game;Hours;Slavs\n")
 no=1
 for finalRow in mycursor.fetchall():
     #print("Working on: "+str(finalRow[1]))
@@ -34,4 +35,5 @@ for finalRow in mycursor.fetchall():
     hours=str(round(finalRow[3]/60,2))
     players=str(finalRow[4])
     print(str(no)+";"+str(gameName)+";"+hours+";"+players)
+    f.write(str(no)+";"+str(gameName)+";"+hours+";"+players+"\n")
     no+=1
