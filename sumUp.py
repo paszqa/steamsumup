@@ -2,18 +2,24 @@ import mysql.connector
 import os
 
 #Check if script isn't running already
-f = open("/tmp/sumUp.tmp", "r")
-if f.read() == "busy":
+def FileCheck(fn):
+    try:
+      open(fn, "r")
+      return 1
+    except IOError:
+      #print "Error: File does not appear to exist."
+      return 0
+fileresult = FileCheck("/tmp/sumUp.tmp")
+#f = open("/tmp/sumUp.tmp", "rw+")
+if fileresult == 1:
     print("Script already running")
-    f.close()
     quit()
 else:
-    f.close()
     print("No script running")
-    g = open("/tmp/sumUp.tmp", "w")
+    g = open("/tmp/sumUp.tmp", "w+")
     g.write("busy")
     g.close()
-f.close()
+
 
 mydb = mysql.connector.connect(
           host="localhost",
@@ -70,6 +76,7 @@ print("ID\tappId\ttotalTime\tplayers")
 for finalRow in mycursor.fetchall():
     print(str(finalRow[0])+"\t"+str(finalRow[1])+"\t"+str(finalRow[2])+"\t"+str(finalRow[3]))
 
-g = open("/tmp/sumUp.tmp", "w")
-g.write("")
-g.close()
+os.remove("/tmp/sumUp.tmp")
+#g = open("/tmp/sumUp.tmp", "w")
+#g.write("")
+#g.close()
