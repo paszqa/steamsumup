@@ -10,7 +10,7 @@ img = img.convert("RGB")
 fnt = ImageFont.truetype('/home/pi/steamsumup/ShareTechMono-Regular.ttf', 15)
 #Settings
 rowHeight=15
-
+firstRowStart=3
 
 #Draw background
 d = ImageDraw.Draw(img,'RGBA')
@@ -32,12 +32,12 @@ for row in f:
         currentColor = (199, 194, 38) # yellowish
     else:
         currentColor = (199, 140, 38) #orange
-    d.text((10,rowHeight*rowNumber), rowSplit[0], font=fnt, fill=currentColor)
+    d.text((10,firstRowStart+rowHeight*rowNumber), rowSplit[0], font=fnt, fill=currentColor)
     if rowNumber % 2:
-        d.rectangle([(10,rowHeight*rowNumber),(500,rowHeight*(rowNumber+1))], fill=(0,0,0,57))
-    d.text((50,rowHeight*rowNumber), rowSplit[1][0:45], font=fnt, fill=currentColor)
-    d.text((430,rowHeight*rowNumber), rowSplit[2], font=fnt, fill=currentColor)
-    d.text((480+min(1,rowNumber)*15,rowHeight*rowNumber), rowSplit[3], font=fnt, fill=currentColor)
+        d.rectangle([(0,(firstRowStart+rowHeight*rowNumber)+2),(530,firstRowStart+rowHeight*(rowNumber+1)+1)], fill=(0,0,0,57))
+    d.text((50,firstRowStart+rowHeight*rowNumber), rowSplit[1][0:45], font=fnt, fill=currentColor)
+    d.text((400,firstRowStart+rowHeight*rowNumber), rowSplit[2], font=fnt, fill=currentColor)
+    d.text((470+min(1,rowNumber)*15,firstRowStart+rowHeight*rowNumber), rowSplit[3], font=fnt, fill=currentColor)
     rowNumber += 1
 #Save for the glory of Slav Squat Squad
 img.save('latest-slav-top.png')
